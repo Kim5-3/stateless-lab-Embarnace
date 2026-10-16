@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(const DirectoryApp());
 
-// Student data never changes inside this model, so all fields are final.
+// Student data is immutable, so all fields are final.
 class Student {
   final String name;
   final String course;
@@ -15,6 +15,9 @@ class Student {
     required this.yearLevel,
     required this.email,
   });
+
+  // Customization: Provide a reusable initial for the student's avatar.
+  String get fullNameInitial => name.isNotEmpty ? name[0].toUpperCase() : '?';
 }
 
 // Sample directory data is constant and does not need app state.
@@ -44,10 +47,10 @@ const List<Student> students = [
     email: 'lexy.lore@example.com',
   ),
   Student(
-    name: 'Mia Califa',
+    name: 'Ha HAHAHAHAH',
     course: 'BS Information Technology',
     yearLevel: 2,
-    email: 'mia.califaf@example.com',
+    email: 'Ha.califa@example.com',
   ),
 ];
 
@@ -70,7 +73,7 @@ class SectionHeader extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
-            fontSize: 22,
+            fontSize: 22, // Customization: Larger section heading.
             fontWeight: FontWeight.bold,
             color: color,
           ),
@@ -132,10 +135,10 @@ class StudentCard extends StatelessWidget {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16), // Customization: Rounded corners.
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16), // Customization: Comfortable card spacing.
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -144,7 +147,7 @@ class StudentCard extends StatelessWidget {
               backgroundColor: color.withOpacity(0.15),
               foregroundColor: color,
               child: Text(
-                student.name[0].toUpperCase(),
+                student.fullNameInitial,
                 style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -167,9 +170,7 @@ class StudentCard extends StatelessWidget {
                   Text(
                     student.course,
                     style: TextStyle(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurfaceVariant,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -192,7 +193,7 @@ class StudentCard extends StatelessWidget {
   }
 }
 
-// Stateless because the student list is supplied by constant sample data.
+// Stateless because the student list comes from constant sample data.
 class DirectoryScreen extends StatelessWidget {
   const DirectoryScreen({super.key});
 
@@ -218,7 +219,7 @@ class DirectoryScreen extends StatelessWidget {
   }
 }
 
-// Stateless because this root widget configures the app theme and home.
+// Stateless because this root widget configures the theme and home screen.
 class DirectoryApp extends StatelessWidget {
   const DirectoryApp({super.key});
 
